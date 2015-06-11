@@ -43,7 +43,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: b7fa9faa4f39f6941b8f9030c0c0323d, type: 2}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -111,7 +111,7 @@ NetworkView:
   m_GameObject: {fileID: 150006}
   m_Enabled: 1
   m_StateSynchronization: 1
-  m_Observed: {fileID: 440458}
+  m_Observed: {fileID: 11453744}
   m_ViewID:
     m_ID: 0
     m_Type: 0

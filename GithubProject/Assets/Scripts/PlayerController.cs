@@ -25,18 +25,23 @@ public class PlayerController : MonoBehaviour {
 	}
 	void OnSerializeNetworkView(BitStream stream,NetworkMessageInfo info) {
 		Vector3 syncPosition = Vector3.zero;
+		Vector3 syncVelocity = Vector3.zero;
 		if (stream.isWriting) {
 			syncPosition = rigidbody.position;
 			stream.Serialize (ref syncPosition);
+
+			syncVelocity=rigidbody.velocity;
+			stream.Serialize(ref syncVelocity);
 		} else {
 			stream.Serialize(ref syncPosition);
+			stream.Serialize(ref syncVelocity);
 
 			syncTime=0;
 			syncDelay=Time.time-lastSynchronizationTime;
 			lastSynchronizationTime=Time.time;
 
-			syncStartPosition = rigidbody.position;
-			syncEndPosition=syncPosition;
+			syncEndPosition=syncPosition+syncVelocity*syncDelay;
+			syncStartPosition=rigidbody.position;
 		}
 	}
 }
