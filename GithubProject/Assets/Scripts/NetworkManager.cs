@@ -4,12 +4,19 @@ public class NetworkManager : MonoBehaviour {
 	private const string typeName="UniqueGameName";
 	private const string gameName="RoomName";
 	private HostData[] hostList;
+	public GameObject player;
 	private void startServer() {
 		Network.InitializeServer(4,25000,!Network.HavePublicAddress());
 		MasterServer.RegisterHost(typeName,gameName);
 	}
 	void OnServerInitialized() {
-		Debug.Log("Server Initialized");
+		spawnPlayer();
+	}
+	void OnConnectedToServer() {
+		spawnPlayer();
+	}
+	private void spawnPlayer() {
+		Network.Instantiate(player,new Vector3(0,5,0),Quaternion.identity,0);
 	}
 	void OnGUI() {
 		if(!Network.isClient && !Network.isServer) {
@@ -38,8 +45,5 @@ public class NetworkManager : MonoBehaviour {
 	}
 	private void joinServer(HostData hostData) {
 		Network.Connect(hostData);
-	}
-	void OnConnectedToServer() {
-		Debug.Log("Server Joined");
 	}
 }
