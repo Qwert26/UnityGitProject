@@ -2,7 +2,7 @@
 using System.Collections;
 public class NetworkManager : MonoBehaviour {
 	private const string typeName="UniqueGameName";
-	private const string gameName="RoomName";
+	private const string gameName="Great Test";
 	private HostData[] hostList;
 	public GameObject player;
 	private void startServer() {

@@ -11,8 +11,20 @@ public class PlayerController : MonoBehaviour {
 	void Update() {
 		if (GetComponent<NetworkView> ().isMine) {
 			inputMovement ();
+			inputColorChange();
 		} else {
 			syncedMovement();
+		}
+	}
+	private void inputColorChange() {
+		if(Input.GetKeyDown(KeyCode.R)) {
+			changeColorTo(new Vector3(Random.Range(1,0),Random.Range(0,1),Random.Range(0,1)));
+		}
+	}
+	[RPC] void changeColorTo(Vector3 color) {
+		GetComponent<Renderer> ().material.color = new Color (color.x,color.y,color.z,1);
+		if(GetComponent<NetworkView>().isMine) {
+			GetComponent<NetworkView>().RPC("changeColorTo",RPCMode.OthersBuffered,color);
 		}
 	}
 	private void syncedMovement() {
