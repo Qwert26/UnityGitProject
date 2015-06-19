@@ -47,11 +47,10 @@ public class NetworkManager : MonoBehaviour {
 		Network.Connect(hostData);
 	}
 	void OnPlayerDisconnected(NetworkPlayer player) {
-		Network.RemoveRPCs (player);
-		Network.DestroyPlayerObjects (player);
+		Network.RemoveRPCs(player);
+		Network.DestroyPlayerObjects(player);
 	}
 	void OnDisconnectedFromServer(NetworkDisconnection info) {
-		return;
 		if(Network.isClient) {
 			Network.RemoveRPCsInGroup(0);
 		}
