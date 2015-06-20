@@ -1,14 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 public class NetworkManager : MonoBehaviour {
 	private const string typeName="UniqueGameName";
 	private const string gameName="Great Test";
 	private HostData[] hostList;
 	public GameObject player;
-	public GameObject buttonJoinRoom;
-	public GameObject buttonStartServer,buttonRefreshHosts,buttonDisconnect;
-	public void startServer() {
+	private void startServer() {
 		Network.InitializeServer(4,25000,!Network.HavePublicAddress());
 		MasterServer.RegisterHost(typeName,gameName);
 	}
@@ -23,6 +20,12 @@ public class NetworkManager : MonoBehaviour {
 	}
 	void OnGUI() {
 		if(!Network.isClient && !Network.isServer) {
+			if(GUI.Button(new Rect(100,100,250,100),"Start Server")) {
+				startServer();
+			}
+			if(GUI.Button(new Rect(100,250,250,100),"Refresh Hosts")) {
+				refreshHostList();
+			}
 			if(hostList!=null) {
 				for(int i=0;i<hostList.Length;i++) {
 					if(GUI.Button(new Rect(400,100+(110*i),300,100),hostList[i].gameName)) {
@@ -32,7 +35,7 @@ public class NetworkManager : MonoBehaviour {
 			}
 		}
 	}
-	public void refreshHostList() {
+	private void refreshHostList() {
 		MasterServer.RequestHostList(typeName);
 	}
 	void OnMasterServerEvent(MasterServerEvent mse) {
