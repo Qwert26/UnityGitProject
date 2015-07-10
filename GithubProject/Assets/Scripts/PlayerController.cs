@@ -5,23 +5,16 @@ public class PlayerController : MonoBehaviour {
 	private float lastSynchronizationTime,syncDelay,syncTime;
 	private Vector3 syncStartPosition,syncEndPosition;
 	void Update() {
-		if (GetComponent<NetworkView>().isMine) {
-			inputMovement ();
-			inputColorChange();
-		} else {
-			syncedMovement();
-		}
+		inputMovement ();
+		inputColorChange();
 	}
 	private void inputColorChange() {
 		if(Input.GetKeyDown(KeyCode.R)) {
 			changeColorTo(new Vector3(Random.Range(0f,1f),Random.Range(0f,1f),Random.Range(0f,1f)));
 		}
 	}
-	[RPC] void changeColorTo(Vector3 color) {
+	void changeColorTo(Vector3 color) {
 		GetComponent<Renderer> ().material.color = new Color (color.x,color.y,color.z,1);
-		if(GetComponent<NetworkView>().isMine) {
-			GetComponent<NetworkView>().RPC("changeColorTo",RPCMode.OthersBuffered,color);
-		}
 	}
 	private void syncedMovement() {
 		syncTime += Time.deltaTime;
